@@ -8,5 +8,8 @@ Information/*.pdf
 Notas/*.*
 Scripts/*.*
 Bibliografia/*.bib
+image/*.jpeg
+image/*.png
+image/*.jpg
 *.html
 *.pdf
