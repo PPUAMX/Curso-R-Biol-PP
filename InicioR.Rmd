@@ -1,0 +1,792 @@
+---
+title: "Inicio R!!! Curso trimestral"
+author: "J. Arévalo"
+date: "11/15/2021"
+output:
+  html_document: 
+    toc: yes
+    number_sections: yes
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Saludar a R. 
+
+```{r hola.R, echo=FALSE}
+print("Hello world!!")
+print("Hola R, soy Pepe!")
+```
+
+```{r}
+print("Hola R!!")
+```
+
+```{r buen.dia, echo=TRUE}
+print("Hola grupo, Buen día!")
+```
+
+## R es una gran calculadora.
+
+### Aritmética básica
+
+#### suma, resta 
+
+##### multip.
+
+###### Div.
+
+:-) Texto 
+
+:-) Texto 
+
+```{r Aritmetica}
+3+3 
+5-3
+3*5
+3/2
+4^2
+3^3
+3^2
+```
+
+### Raíz cuadrada
+
+```{r sqrt}
+9^(1/2)
+sqrt(4)
+2^(1/2)
+sqrt(9)
+```
+
+### Exp. negativo
+
+```{r Exp.neg}
+3^-3
+10^-5
+```
+
+
+### Div. enteros
+
+```{r Div.Ent}
+325/16
+325%/%16
+```
+
+Modulo o residuo
+
+```{r Residuo}
+325 %% 16
+320 %% 16
+15%/% 7  # Entero
+15 %% 7  # Residuo
+```
+
+Exponente negativo
+
+```{r Num.Exp.neg}
+(-6)^(1/3)  # NaN
+-6^(1/3)
+(-6)^2.3    #NaN
+-6^2.3
+```
+
+Funciones matemáticas dentro del lenguaje
+
+```{r Logaritmos}
+log(10)
+exp(1)
+log10(10)
+```
+
+Log de diferentes bases: log base 3 de 81
+
+```{r Otras.bases.Log}
+log(81,3)
+log(27,3)
+log(100,5)
+log(100,3.1)
+```
+
+Las opciones en las funciones de escriben después de un ","
+
+Raíz cuadrada (**sqrt()**) y valores absolutos (**abs()**) de un **_número_**(s)
+
+```{r abs.number}
+sqrt(10)
+abs(-4.5)
+-6^(1/3)
+abs(-6^(1/3))
+abs((4*5/(4*5))*-10)
+```
+
+Factoria x!
+
+```{r Factorial}
+factorial(3)
+factorial(5)
+factorial(12)
+factorial(123)
+```
+
+Coeficiente binomial *choose(8,4)* **n!/(x!(n-x)!)**
+
+```{r coef.binomial}
+choose(6,3)
+choose(8,4)
+```
+
+*gamma* Gamma(x) o **(x-1)!**
+
+```{r Gamma}
+gamma(3)
+gamma(5)
+gamma(10)
+factorial(9)
+```
+
+Log natural de Gamma
+
+```{r Lgamma}
+lgamma(5)
+lgamma(10)
+```
+
+Función del entero menor más cercano, *floor()*
+
+```{r Floor}
+floor(5.3)
+floor(5.9)
+```
+
+Entero mayor más cercano *ceiling()*
+
+```{r ceiling}
+ceiling(9.8)
+ceiling(5.3)
+```
+
+Entero más cercano entre X y 0 **trunc(+)** = *floor* para posit. y **trunc(-)** = *ceiling* para neg.
+
+```{r Trunc}
+trunc(1.4)
+trunc(8.9)
+trunc(-1.7)
+trunc(-6.3)
+```
+
+Función redondea el valor de x a entero
+
+```{r Round}
+round(5.6)
+round(5.4)
+round(9.4567, digits=2)
+round(9.4567)
+round(5.8799879, digits= 3)
+round(5.8799879, digits = 2)
+round(5.8299879, digits=4)
+```
+
+## Mi primera función!!! que **Chido**!!
+
+**redondeo**
+
+```{r F.redondeo}
+redondeo <- function(x){
+    floor(x + 0.5) 
+ }
+```
+Sintaxis en **R**
+
+funcion(x)
+
+Prueba de mi función *redondeo*:
+
+```{Test.F.redondeo}
+redondeo(5.6)
+redondeo(1.2)
+redondeo(9.45634)
+```
+
+```{r Test.F.redondeo.salida, echo=TRUE}
+redondeo(5.6)
+redondeo(1.2)
+redondeo(9.45634)
+```
+
+**signif** asigna a x n dígitos en notación científica
+
+```{r signif}
+signif(187654329, digits=3)
+signif(12345678910, digits=4)
+signif(12345678910, digits=5)
+```
+
+Números al azar, genera n números aleatoreos entre 0 y 1 en una distribución uniforme, **runif()**
+
+```{r runif}
+runif(3)
+runif(10)
+runif(100)
+```
+
+### Sample genera números al azar sin remplazo (replace= FALSE).
+
+```{r f.sample}
+sample(1:56,6, replace = FALSE)
+```
+
+
+## Tarea:
+Números aleatorios, vector de 10 números enteros.
+
+Creación del vector (vector10):
+
+```{r C.vector10.azar}
+vector10 <- round((runif(10) * 100))
+```
+
+Vector con 10 números aleatorios. 
+
+```{r Disp.vector10.azar}
+vector10
+```
+
+### Otro ejemplo:
+
+Genere 10 números al azar (dist. normal) para muestrear en 10 cuadrantes en un mapa de 100 cuadrantes.
+
+
+```{r Vextor100.diff.formats}
+cuadrantes100 <-  ceiling(runif(10) * 100) 
+cuadrantes100A <- round(runif(10) * 100, digits = 0)
+cuadrantes100B <- redondeo(runif(10) * 100)
+cuadrantes100
+cuadrantes100A
+cuadrantes100B
+```
+
+Medias 
+```{r media.cuadrantes.all}
+mean(cuadrantes100)
+mean(cuadrantes100A)
+mean(cuadrantes100B)
+```
+
+
+Generar 10 alturas entre 5-40m. 
+
+```{r Alturas}
+Alturas <- floor(runif(10, min = 5, max = 40)) 
+Alturas
+plot(Alturas)
+```
+
+#### Objetos en un texto
+
+La media de los valores de las diferentes listas de los valores generados al azar del *cuadrante100* es **`r mean(cuadrantes100)`**, la cual es diferente a la media de *cuadrantes100A*, **`r mean(cuadrantes100A)`** y la media de *cuadrantes100B* es **`r mean(cuadrantes100B)`**.
+
+
+La media de cuadrantes100 es `r mean(cuadrantes100)` y la var. es `r var(cuadrantes100)`.  
+
+
+## Guía de estilo de R 
+
+Se recomienda ver la pag. web. [Estilo R](https://google.github.io/styleguide/Rguide.html)
+La cual presenta una guía de estilo general  para la sintaxis de  R.  
+
+Además se encuentra la la guía de estilo de [tidyverse](https://style.tidyverse.org/index.html) que puede ser también consultada. 
+
+
+
+## Funciones trigonométricas en radianes
+
+círculo: 2pi = 360°; pi/2 = 90°
+
+pi = `r pi` 
+
+```{r function.pi}
+pi
+```
+
+
+### Ángulos los trabaja **R** en radianes.
+
+seno de 90º, seno de pi y coseno de 90º
+
+```{r F.sin.cos}
+sin(pi/2)
+sin(pi)
+cos(pi/2)
+```
+
+### Secuencias
+
+```{r Sequence}
+1:10
+```
+
+secuencia: seq(I, F, incremento o decremento)
+
+```{r Seq.examples}
+seq(0,10,1)
+seq(0,1,0.1)
+seq(9,-6,-1)
+seq(-6,-12,-0.5)
+seq(12, 6,  -0.2)
+```
+
+Secuencias con la opción **along**
+
+```{r Sequence.along}
+seq(from=2, by =-1, along= 1:20)
+seq(from=10, by =-3, along= 1:10)
+seq(from=1, by = 2, along= 1:20)
+```
+
+Generar repeticiones en una secuencia
+
+```{r Rep.numbers}
+rep(3.3, 10)
+rep(1:3,2)
+rep(1:5,5)
+rep(1:5, each=5)
+rep(1:5, rep(2,5))
+rep(1:5,1:5)
+rep(1:5, c(2,1,3,1,4))
+rep(1:5, c(1,2,3,4,5))
+```
+
+Repetición de caracteres, letras, letras y números, con la función **rep()**
+
+```{r Rep.charc}
+rep(c("masculino_0","femenino_1","hermafrodita_2"), c(1,2,3))
+rep(c("hola","adios","mañana","ayer","pasado","presente"), c(2,1,2,1,2,1))
+```
+
+Asignación, la creación de objetos en **R**
+
+Todos los cálculos pueden ser almacenados en objetos usando el operador de asignación **\<-** o el caracter =
+
+Reglas para crear un objeto:
+
+1.  No puede contener símbolos ?¡\*+#
+2.  Se puede utilizar ".", "\_" o iniciar con punto; **hola_1carnal**
+3.  Los nombres de los objetos pueden contener números pero no al inicio.
+4.  R diferencia las mayúsculas de las minúsculas, **X** es diferente a **x** y **algo** es diferente a **algO**.
+
+Tipos de objetos:
+
+#### Vector
+
+Crear un vector en **R**
+
+Variable *y*
+
+```{r Exmpl.vector.y}
+y <- c(1,2,3,4,5,6,7,8,9)
+y
+```
+
+Variable *x*
+
+```{r Exmpl.vector.x}
+x <- c(5,6,7,4,6,7,5,6,8,7,5)
+x
+```
+
+Función **sum()**
+
+```{r Sum.vector.x}
+sum(x)
+sum(x<5)
+sum(x>7)
+sum(x<7)
+sum(x[x<7])
+```
+
+#### Lógico (TRUE FALSE)
+
+Condicional lógico
+
+```{r Qst.cond.logc}
+x
+x <= 7
+```
+
+Multiplicación de valores lógicos por un valor numérico, resulta en valores numéricos.
+
+```{r Tms.logc.val.}
+x
+x*(x<7)
+```
+
+Sumatoria **sum()**
+
+```{r Sum}
+sum(x*(x<7))
+```
+
+##### Listas
+
+```{r List.feliz}
+lista_feliz <- c(x, "Hola", "Hola", "Adios", x<7, y)
+lista_feliz
+```
+
+### Matrices
+
+Arreglo de renglones y columnas.
+
+Ejemplo para poner nombres a los renglones y columnas.
+
+
+```{r Mtrx.names.C.R}
+mdat <- matrix(c(1,2,3, 11,12,13), nrow = 2, ncol = 3, byrow = TRUE, dimnames = list(c("row_1", "row_2"), c("C.1", "C.2", "C.3")))
+mdat
+```
+
+
+### Dataframe (bases de datos con diferentees variables)
+
+```{r Objects.for.DF}
+n = c(2, 4, 6) 
+x = c(1,3,5)
+s = c("xaa", "ybb", "zcc") 
+b = c(TRUE, FALSE, TRUE)
+especies <- factor(c("An","Pl","Fn"))
+```
+
+```{r Str.var.DF}
+str(especies)
+str(s)
+str(b)
+str(n)
+```
+
+Asignar objetos a un **Dataframe**
+
+```{r Objet.dataf}
+datf <- data.frame(especies, x, n, s, b)
+datf
+```
+
+Estructura del objeto, **Dataframe**
+
+```{r Str.dataf}
+str(datf)
+```
+
+Gráfico de x y n
+
+```{r Plot.sample}
+plot(datf$n)
+plot(datf$x,datf$n, xlab = "estos es x", ylab = "esto es y (n)")
+```
+
+-----------------------------------------------------------------
+
+### Gráfica de un una variable tipo Factor y una variable tipo numérica, tomado del dataframe, *iris*, Especies y Ancho sepalos.
+
+```{r Load.DF.iris}
+library(datasets)
+data("iris")
+```
+
+
+```{r library.help.}
+?iris
+library(help = "datasets")
+```
+
+```{r ejemploCO"}
+data("CO2")
+head(CO2)
+tail(CO2)
+```
+
+
+¿Cómo es el data frame de *iris*?
+
+```{r Str.iris}
+str(iris)
+```
+
+Conocer un data frame completo.
+
+Conocer el data frame:
+```{r Show.iris}
+head(iris)
+tail(iris)
+# iris
+```
+
+Estadísticos descriptivos de **iris**
+
+```{r Summary.iris}
+summary(iris)
+```
+
+Gráfica de la variable factor (Species) y la variable Sepal.Wdth, de las tres especies
+
+```{r Plot.irisSp-Sep.Width}
+plot(iris$Species,iris$Sepal.Width, xlab = "Especies", ylab = "Ancho sepalos (cm)")
+plot(iris$Species,iris$Sepal.Length, xlab = "Especies", ylab = "Largo sepalos (cm)")
+plot(iris$Species,iris$Petal.Width, xlab = "Especies", ylab = "Ancho petalos (cm)")
+plot(iris$Species,iris$Petal.Length, xlab = "Especies", ylab = "Largo petalos (cm)")
+```
+
+Gráfico matriz de las variables del data frame *iris*.
+
+```{r}
+pairs(iris[1:4], main="Datos de Iris (rojo=setosa, verde=versicolor, azul=virginica)",
+      pch=23, bg=c("red","green3","blue")[unclass(iris$Species)])
+plot(iris)
+```
+
+#### Crear un histograma de los valores de la long. de los Sepalos
+
+```{r basic.histogram}
+hist(iris$Sepal.Length)
+hist(iris$Sepal.Width)
+hist(iris$Petal.Length)
+hist(iris$Petal.Width)
+```
+ 
+
+Histograma por grupos  (pequeños múltiplos)
+
+```{r hist.group}
+par(mfrow = c(3,1))
+hist(iris$Petal.Width[iris$Species == "setosa"],
+xlim = c(0,3),
+breaks = 9, 
+main = "Ancho petalos de I. setos",
+xlab = "",
+ylab = "Frecuencia",
+col = "red")
+
+hist(iris$Petal.Width[iris$Species == "versicolor"],
+xlim = c(0,3),
+breaks = 9, 
+main = "Ancho petalos de I. versicolor",
+xlab = "", 
+ylab = "Frecuencia",
+col = "green3")
+
+hist(iris$Petal.Width[iris$Species == "virginica"],
+xlim = c(0,3),
+breaks = 9, 
+main = "Ancho petalos de I. virginica",
+xlab = "", 
+ylab = "Frecuencia",
+col = "blue")
+par(mfrow = c(1,1))
+```
+
+
+```{r hist.SL.iris}
+hist(iris$Sepal.Length,
+     col='steelblue',
+     main='Histograma',
+     xlab='Longitud',
+     ylab='Frecuencia')
+```
+
+#### Plot de las variables: Sepal Width vs. Sepal Length (Alometría)
+
+```{r plot.SW.SL.iris}
+plot(iris$Sepal.Width, iris$Sepal.Length,
+     col='steelblue',
+     main='Scatterplot',
+     xlab='Sepal Width (cm)',
+     ylab='Sepal Length (cm)',
+     pch=17)
+```
+#### Boxplot of species vs. sepal length
+
+
+```{r boxplot.Sepal.L.sp.iris}
+boxplot(Sepal.Length~Species,
+        data=iris,
+        main='Sepal Length by Species',
+        xlab='Species',
+        ylab='Sepal Length',
+        col='steelblue',
+        border='black')
+```
+
+
+```{r}
+library(psych)
+```
+
+
+```{r}
+describe(iris)
+```
+
+output de la función:
+
+vars: número de columna 
+
+n: Número de casos validos
+
+mean: Valor de la media 
+
+median: Valor de la mediana 
+
+trimmed: The trimmed mean (media ajustada) (por default recorta el 10% de la observaciones de cada lado)
+
+mad: Desviación absoluta de la mediana (de la mediana)
+
+min: Valor mínimo 
+
+max: Valor máximo 
+
+range: Rango de valores  (max – min)
+
+skew: Asimetría (sesgado/desviar/oblicuo/inclinado) The skewness
+
+kurtosis: Curtosis (el grado de concentración o apuntamiento al rededor de la zona central, + leptocúrtica (>3) y - platicúrtica (<3), mesocúrtica (=3))
+
+se: Error estandard 
+
+
+#### Tabla resumen pequeña
+
+```{r}
+describe(iris, fast=TRUE)
+```
+
+#### Tabla resumen de solo una o mas variables (columnas)
+```{r}
+describe(iris[ , c('Sepal.Length', 'Sepal.Width')], fast=TRUE)
+```
+
+#### Tabla resumen de grupos variable _Species_ 
+
+```{r}
+describeBy(iris[1:4], group=iris$Species, fast=TRUE)
+```
+
+
+
+
+
+#### Tarea:
+
+Graficar long y anchos del Data frame *iris* y probar las opciones de los tipos (type) en diferentes gráficas.
+
+Graficar las especies y las diferentes variables del data frame:
+
+comparar con la función **hist()** el plot(, , type= "h" )
+
+Ejemplo:
+
+1a opción
+
+```{r Plot.iris.Sep.Lngth}
+plot(iris$Sepal.Length, type = "h")
+```
+
+2a opción
+
+```{r Plot.iris.Sep.lngth.2opt}
+plot(iris$Sepal.Length)
+```
+
+Histograma de frecuencias de la longitud de lo sepalos del iris data frame.
+
+```{r hist.frec.Sep.Lngth}
+hist(iris$Sepal.Length, main = "Long. sepalos de Iris", xlab = "Long.", ylab = "Frecuencia", freq= TRUE)
+```
+
+```{r hist.Dns.Sep.Lngth}
+hist(iris$Sepal.Length, main = "Long. sepalos de Iris", xlab = "Long.", ylab = "Densidad", freq= FALSE)
+```
+
+
+## Leer data tables and csv files. 
+
+
+#### Data tables
+
+```{r read.from.objet}
+Datos = ("
+Sexo    Altura  Peso
+M        190     95
+F        170     66
+F        165     60
+M        183     90
+M        166     80
+M        172     90
+F        156     50
+F        168     56
+F        155     50
+M        175     76
+")
+```
+
+
+```{r read.Datos}
+Dt1 <- read.table(textConnection(Datos),header = TRUE)
+```
+
+```{r Dt1.str}
+Dt1
+str(Dt1)
+plot(Dt1$Altura, Dt1$Peso)
+boxplot(Dt1$Peso ~ Dt1$Sexo)
+```
+
+Lectura desde un archivo ASCII, *file.dat*
+
+```{r read.ASCII.dat}
+Dt1a = read.table("~/Proyectos/Cursos/Curso-R-Biol-PP/Datos/Dt_S_A_P.dat", header = TRUE)
+```
+
+```{r str.DT1a}
+str(Dt1a)
+plot(Dt1a$Altura, Dt1a$Peso)
+```
+
+
+
+
+```{r read.txt.file}
+dataRunner <- read.table("~/Proyectos/Cursos/Curso-R-Biol-PP/Datos/runners100m2020.txt", header = TRUE, sep = ",")
+View(dataRunner)
+```
+
+```{r read.choose.txt}
+#datas1 <- read.table(file.choose(), header = TRUE, sep=",")
+#View(datas1)
+```
+
+
+```{r read.choose.csv}
+#datas1a <- read.csv(file.choose(), header = TRUE, sep=",")
+#View(datas1)
+```
+
+```{r read.csv.file}
+runners100m2020 <- read.csv("~/Proyectos/Cursos/Curso-R-Biol-PP/Datos/runners100m2020.csv")
+View(runners100m2020)
+```
+
+
+```{r read_csv.file}
+library(readr)
+runners100m2020 <- read_csv("~/Proyectos/Cursos/Curso-R-Biol-PP/Datos/runners100m2020.csv")
+View(runners100m2020)
+```
+
+
+
+
+

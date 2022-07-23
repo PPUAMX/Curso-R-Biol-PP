@@ -1,0 +1,40 @@
+---
+title: "Texto ejemplo de documento con Bibliografía"
+author: "Arévalo, J."
+date: "11/09/2021"
+output:
+  pdf_document: default
+  html_document: default
+bibliography: ~/Bibliografia/references.bib
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(vegan)
+```
+
+## Nuevo ejemplo
+
+Los datos de Iris se presentan en la gráfica
+
+```{r plotiris, echo= FALSE}
+plot(iris)
+```
+
+**Hola**, *Hola*, __Hola__, _Hola_.
+
+```{r tablaIris, echo= FALSE}
+# table(iris)
+```
+
+```{r BCI}
+data(BCI)
+diversity(BCI, index = "simpson")
+```
+
+$y = bx +a$ ecuación de la recta.
+
+El artículo interesante @tateno1997 el cual habla de los ciclos del Nitrógeno y Carbono.
+
+@pritchard1992 es in libro muy interesante.

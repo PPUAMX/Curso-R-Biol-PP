@@ -1,0 +1,354 @@
+---
+title: "Prueba de t. Curso-inter Trimestral R 2021"
+author: "Arévalo, J."
+date: "3/25/2021"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+require(gplots)
+rm(list=ls())
+```
+
+# Prueba de T
+
+Se utiliza para comparar dos promedios entre dos poblaciones (tratamientos/muetras).
+
+Variables continua
+
+Datos en dos grupos
+
+Se realiza por pares, grupos, antes o después.
+
+```{r}
+mayitos <- read.delim("~/Proyectos/Cursos/CursoR_Inter2021/Datos/may1.txt", stringsAsFactors=TRUE)
+```
+
+```{}
+View(mayitos)
+```
+
+```{r}
+str(mayitos)
+```
+
+```{r}
+summary(mayitos)
+```
+
+```{r}
+plot(mayitos$Parcela,mayitos$long_hoja, xlab= "Parcela", ylab = "Long. hoja (cm)" )
+```
+
+\#\# Prueba de T
+
+```{r}
+mayitos.p.t <- t.test(mayitos$long_hoja ~ mayitos$Parcela)
+mayitos.p.t
+```
+
+Se reportan diferencias estadísticamente significativas en las longitudes de las hojas en las parcelas...
+
+## Ejemplo Aornatum
+
+```{r}
+Aornatum <- read.csv("~/Proyectos/Cursos/CursoR_Inter2021/Datos/Aornatum.csv", stringsAsFactors = TRUE)
+head(Aornatum)
+```
+
+Las Plantas reproductivas son las altas o las anchas.
+
+H0: Diametro y altura no dependen de la reproducción
+
+H1: Diámetro y altura sí dependen de la reproducción
+
+Fórmula:
+
+y \~ x
+
+diámetro (var. continua) \~ inflorescencia (discreta, factor)
+
+Con R basico, cilindro.
+
+área de la base \* altura
+
+```{r vol.cil}
+Aornatum$vol.cil <- (((Aornatum$Diametro_cm/2)^2) * pi) 
+```
+
+Crear la variable con mutate
+
+```{r}
+summary(Aornatum)
+```
+
+```{r boxplotD_A_vol.cil}
+plot(Aornatum$Inflorescencia, Aornatum$Diametro_cm, xlab = " Inflorescencia", ylab= "Diámetro (cm)")
+plot(Aornatum$Inflorescencia, Aornatum$Altura_cm, xlab = " Inflorescencia", ylab= "Altura (cm)")
+plot(Aornatum$Inflorescencia, Aornatum$vol.cil, xlab = " Inflorescencia", ylab= "Volumen (cm3)")
+```
+
+```{r prueba de t}
+t.test(Aornatum$Diametro_cm ~Aornatum$Inflorescencia)
+t.test(Aornatum$Altura_cm ~Aornatum$Inflorescencia)
+t.test(Aornatum$vol.cil ~Aornatum$Inflorescencia)
+```
+
+## X$^2$
+
+Pruebas de bondad de ajuste
+
+Tablas de contingencia:
+
+![](Imagenes/IMG_8683.jpg "Prueba de Hip.")
+
+```{r}
+habitos  <- matrix( c(4,7,6,11), ncol= 2)
+colnames(habitos) <- c("Boy","Girl")
+rownames(habitos) <- c("Bañado", "No Bañado")
+habitos
+```
+
+Prueba de \$X\^2\$
+
+```{r}
+prueba <- chisq.test(habitos)
+prueba
+```
+
+```{r}
+str(prueba)
+```
+
+```{r}
+prueba$observed
+prueba$expected
+prueba$residuals
+```
+
+
+Ejemplo setosa vs. virginica ancho del sepalo.
+
+
+```{r}
+data(iris)
+ver_set_data <-  iris[-(51:100),] 
+ver_set_data    
+ver_set_data2 <- iris[c(1:50, 101:150),]
+ver_set_data2
+ver_set_data3 <- subset(iris, iris$Species != "versicolor")
+ver_set_data3
+ver_set_data4 <- iris %>% filter(Species != "versicolor")
+ver_set_data4
+ver_set_data5 <- iris %>% filter(Species == c("setosa", "virginica"))
+ver_set_data5
+ver_set_data6 <- subset(iris, iris$Species == c("setosa", "virginica"))
+ver_set_data6
+```
+
+
+```{r}
+plot(ver_set_data2$Sepal.Width ~ ver_set_data2$Species)
+```
+
+
+## Variables categoricas 
+
+## Cubrebocas uso del cubrebocas
+
+Sexo F y M 
+
+
+Orden:
+(S|N) usa cb
+(S|N) uso corrcto
+
+X NN, SN , SS 
+
+```{r}
+cubrebocas <- read.csv("~/Proyectos/Cursos/CursoR_Inter2021/Datos/cubrebocas.csv", stringsAsFactors=TRUE)
+```
+
+```{r}
+str(cubrebocas)
+```
+
+```{r}
+datoscb.tab <- table(cubrebocas$X,cubrebocas$Sexo)
+```
+
+```{r}
+an.Xi.cb <- chisq.test(datoscb.tab)
+an.Xi.cb
+```
+
+```{r}
+an.Xi.cb$stdres
+balloonplot(an.Xi.cb$stdres, main ="Residuales estandarizados")
+```
+
+
+##  Regresión (variables continuas)
+
+Modelo de regresión lineal:  $y = bx + a$
+
+$$y = bx + a$$
+Los coeficientes son $b$, la pendiente y $a$, la ordenada al origen. 
+
+
+
+```{r}
+str(Aornatum)
+```
+
+
+```{r}
+modeloAornatum <- lm(Aornatum$Diametro_cm ~ Aornatum$Altura_cm)
+modeloAornatum
+summary(modeloAornatum)
+print(modeloAornatum$coefficients)
+plot(Aornatum$Altura_cm , Aornatum$Diametro_cm)
+abline(modeloAornatum)
+```
+
+La ecuación de la recta asociada a mis datos tiene es $y = 0.59x + 5.02$  
+
+```{r}
+plot(modeloAornatum)
+```
+
+## ANOVA
+
+Análisis de Varianza 
+
+```{r}
+TillandsiaG <- read.csv("~/Proyectos/Cursos/CursoR_Inter2021/Datos/TillandsiaGrupal.csv", stringsAsFactors=TRUE)
+```
+
+Análisis de ornatum2 
+
+```{r}
+ornatum2 <- read.csv("~/Proyectos/Cursos/CursoR_Inter2021/Datos/ornatum_2.csv", stringsAsFactors=TRUE)
+str(ornatum2)
+head(ornatum2)
+ornatum.16.18 <- subset(ornatum2, ornatum2$Anio == c("A2016","A2018"))
+ornatum.1618 <- ornatum2 %>% filter(ornatum2$Anio == c("A2016", "A2018"))
+droplevels(ornatum.16.18)
+droplevels(ornatum.1618)
+t.test.ornatum1618 <- t.test(ornatum.1618$Diametro ~ornatum.1618$Anio) 
+t.test.ornatum1618
+t.test.ornatum1618A <- t.test(ornatum.1618$Altura ~ornatum.1618$Anio) 
+t.test.ornatum1618A
+```
+
+
+```{r}
+plot(y = ornatum.1618$Diametro , x = ornatum.1618$Anio)
+plot(y = ornatum.1618$Altura, x = ornatum.1618$Anio)
+```
+
+
+## Anova 
+
+```{r}
+model.anova.diam <- aov(ornatum2$Diametro ~ornatum2$Anio)
+model.anova.diam
+summary(model.anova.diam)
+TukeyHSD(model.anova.diam)
+```
+
+
+
+```{r}
+
+plot(y = ornatum2$Diametro , x = ornatum2$Anio)
+
+plotmeans(ornatum2$Diametro ~ ornatum2$Anio, xlab = "Años", ylab = "Diámetro (cm)", col = "red")
+
+plotmeans(Diametro ~ Anio, data = ornatum2, xlab = "Años", ylab = "Diámetro (cm)", col = "blue" )
+```
+
+
+## Alturas 
+
+
+```{r}
+model.anova.alt <- aov(ornatum2$Altura ~ ornatum2$Anio)
+model.anova.alt
+summary(model.anova.alt)
+TukeyHSD(model.anova.alt)
+```
+
+
+
+```{r}
+plot(y = ornatum2$Altura , x = ornatum2$Anio)
+
+plotmeans(ornatum2$Altura ~ ornatum2$Anio, xlab = "Años", ylab = "Diámetro (cm)", col = "red")
+
+plotmeans(Altura ~ Anio, data = ornatum2, xlab = "Años", ylab = "Diámetro (cm)", col = "blue" )
+```
+
+
+## Regresión Alt-Daim  por año 
+
+
+```{r}
+datos.2016 <- ornatum2 %>% filter(Anio == "A2016")
+regresion.2016  <- lm(ornatum2$Diametro ~ ornatum2$Altura)
+regresion.2016
+```
+
+```{r}
+datos.2018 <- ornatum2 %>%  filter(Anio == "A2018")
+regresion.2018  <- lm(ornatum2$Diametro ~ ornatum2$Altura)
+regresion.2018
+```
+
+```{r}
+datos.2019 <- ornatum2 %>%  filter(Anio == "A2019")
+regresion.2019  <- lm(ornatum2$Diametro ~ ornatum2$Altura)
+regresion.2019
+```
+
+```{r}
+datos.2020 <- ornatum2 %>%  filter(Anio == "A2020")
+regresion.2020  <- lm(ornatum2$Diametro ~ ornatum2$Altura)
+regresion.2020
+```
+
+
+
+```{r}
+plot(datos.2016$Altura, datos.2016$Diametro, col = "blue", ylim=c(0,30))
+abline(regesion.2016, col = "blue")
+points(datos.2018$Altura,datos.2018$Diametro, col= "red", pch=17)
+abline(regesion.2018, col = "red")
+points(datos.2019$Altura,datos.2019$Diametro, col= "green", pch=18)
+abline(regesion.2019, col = "green")
+points(datos.2020$Altura,datos.2020$Diametro, col= "yellow", pch=19)
+abline(regesion.2020, col = "yellow")
+```
+
+
+```{r}
+par(mfrow = c(2,2))
+plot(datos.2016$Altura, datos.2016$Diametro, col = "blue", ylim=c(0,30))
+abline(regresion.2016, col = "black")
+plot(datos.2018$Altura, datos.2018$Diametro, col = "red", ylim=c(0,30))
+abline(regresion.2018, col = "black")
+plot(datos.2019$Altura, datos.2019$Diametro, col = "green", ylim=c(0,30))
+abline(regresion.2019, col = "black")
+plot(datos.2020$Altura, datos.2020$Diametro, col = "yellow", ylim=c(0,30))
+abline(regresion.2020, col = "black" )
+```
+
+```{r}
+par(mfrow = c(1,1))
+```
+
+

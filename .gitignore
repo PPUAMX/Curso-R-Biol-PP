@@ -4,3 +4,9 @@
 .Ruserdata
 Curso-R-Biol-PP.Rproj
 LICENSE
+Information/*.pdf
+Notas/*.*
+Scripts/*.*
+Bibliografia/*.bib
+*.html
+*.pdf
